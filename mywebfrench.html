@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+
+<link href="myweb.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<!--[if lt IE 9]>
+<script src="js/modernizr.js"></script>
+<![endif]-->
+</head>
+<body>
+    <div class="home">
+        <div class="content">
+            <div class="stars"></div>
+            <img class="bgc" src="trees.jpg" width="100%" alt="">
+            <h3 class="title">Faire face aux défis est un élément clé du succès</h3>
+            <h3 class="titles">Route à suivre</h3>
+            <img class="icon" src="./img/down.png" alt="">
+            <div class="ribbon">
+                <a href="mywebfrench.html"><span>Accueil</span></a>
+                <a href="aboutmefrench.html"><span>À propos</span></a>
+                <a href="formfrench.html"><span>Contact</span></a>
+                <a href="myweb.html"><span>English</span></a>
+                <a href="mywebchinese.html"><span>中文</span></a>
+               
+            </div>
+        </div>
+    </div>
+      <div class="icons">
+          <div class="icons_items">
+              <img class="icons_items_imgs" src="studyallnight.jpg" alt="">
+              <span>Prendre l'apprentissage comme une sorte d'habitude de vie</span>
+          </div>
+          <div class="icons_items">
+              <img class="icons_items_imgs" src="landscapeandcat.jpg" alt="">
+              <span>Les livres et les paysages sont ce qui compte vraiment</span>
+          </div>
+          <div class="icons_items">
+              <img class="icons_items_imgs" src="booksea.jpg" alt="">
+              <span>La connaissance de l'univers nécessite une diligence spatiale pour explorer</span>
+          </div>
+          <div class="icons_items">
+              <img class="icons_items_imgs" src="team.jpg" alt="">
+              <span>Travailler ensemble est la pierre angulaire du succès</span>
+          </div>
+      </div>
+      <div class="introduce">
+          <div class="introduce_item">
+              <img class="introduce_item_img" src="richu.png" alt="">
+              <span class="introduce_item_title">Le lever du soleil apporte toujours de la splendeur, et un nouveau jour commence. Pas d'hésitation ni d'hésitation, accueillez chaque belle journée.</span>
+
+          </div>
+          <div class="introduce_item">
+
+              <span class="introduce_item_titles">Les personnes qui étudient sont toujours pressées, et le temps semble toujours insuffisant. Avant de vous en rendre compte, l'arbre est déjà plein de fleurs</span>
+              <img class="introduce_item_img" src="lakeandflower.jpg" alt="">
+          </div>
+          <div class="introduce_item">
+              <img class="introduce_item_img" src ="tingzilandscap.png" alt="">
+              <span class="introduce_item_title">Souvent rappel, il y a plusieurs années, pluie ou soleil, le garçon qui devait passer par ce pavillon tous les jours.</span>
+          </div>
+          <div class="introduce_item">
+              <span class="introduce_item_titles">Les voir grandir heureux, tout semble être beau.</span>
+              <img class="introduce_item_img" src="girl.jpg" alt="">
+          </div>
+      </div>
+      <audio autoplay="autoplay" id="audio" loop="loop">
+              <source src="shuijing.mp3" type="audio/MP3">
+             
+      </audio>
+      <img class="music_img" src="changp.png" alt="">
+  </div>
+
+</body>
+<script>
+  let mucics = document.getElementById('audio')
+  document.body.addEventListener('mousemove', function() {
+      setTimeout(() => {
+          mucics.play();
+      }, 2000);
+  }, false);
+</script>
+
+</html>
