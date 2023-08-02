@@ -1,92 +1,59 @@
 
-<!doctype html>
+
+
+
+<!DOCTYPE html>
 <html>
+
 <head>
-  <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu Service Client</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var url = "http://localhost:8080/WebMenuServiceProject/ws/WebMenu"; // 修改为你的SOAP服务地址
+            var soapRequest =
+                `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webMenuService/">
+                    <soapenv:Header/>
+                    <soapenv:Body>
+                        <web:displayMenuInfo/>
+                    </soapenv:Body>
+                </soapenv:Envelope>`;
 
-<link href="myweb.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: "xml",
+                data: soapRequest,
+                headers: {
+                    "SOAPAction": "",
+                    "Content-Type": "text/xml;charset=UTF-8"
+                },
+                success: function (data, status, req) {
+                    // 从SOAP响应中获取你需要的数据，并将其添加到HTML中
+                    // 这个例子中只是简单地将整个SOAP响应转化为字符串并显示出来
 
-<!--[if lt IE 9]>
-<script src="js/modernizr.js"></script>
-<![endif]-->
+                    var xmlDoc = req.responseXML;
+                    var menuItems = xmlDoc.getElementsByTagName("return");
+                    var result = "";
+                    for (var i = 0; i < menuItems.length; i++) {
+                        result += menuItems[i].textContent + "\n";
+                    }
+                    $("#result").text(result);
+                },
+                error: function (req, status, error) {
+                    // 错误处理
+                    alert("An error occurred: " + error);
+                }
+            });
+        });
+    </script>
 </head>
+
 <body>
-    <div class="home">
-        <div class="content">
-            <div class="stars"></div>
-            <img class="bgc" src="trees.jpg" width="100%" alt="">
-            <h3 class="title">Facing challenges is a key element of success</h3>
-            <h3 class="titles">Road ahead</h3>
-            <img class="icon" src="./img/down.png" alt="">
-            <div class="ribbon">
-                <a href="index.html"><span>Home</span></a>
-                <a href="aboutme.html"><span>About</span></a>
-                <a href="form.html"><span>Contact</span></a>
-               
-                        <a href="mywebfrench.html"><span>Français</span></a>
-                        <a href="mywebchinese.html"><span>中文</span></a>
-               
-            </div>
-        </div>
-    </div>
-      <div class="icons">
-          <div class="icons_items">
-              <img class="icons_items_imgs" src="studyallnight.jpg" alt="">
-              <span>Take learning as a kind of living habits</span>
-          </div>
-          <div class="icons_items">
-              <img class="icons_items_imgs" src="landscapeandcat.jpg" alt="">
-              <span>Books and scenery are what truly matter</span>
-          </div>
-          <div class="icons_items">
-              <img class="icons_items_imgs" src="booksea.jpg" alt="">
-              <span>Knowledge of the universe need diligence spacecraft to explore</span>
-          </div>
-          <div class="icons_items">
-              <img class="icons_items_imgs" src="team.jpg" alt="">
-              <span>Working together is the cornerstone of success</span>
-          </div>
-      </div>
-      <div class="introduce">
-          <div class="introduce_item">
-              <img class="introduce_item_img" src="richu.png" alt="">
-              <span class="introduce_item_title">The sunrise always brings splendor, and a new day begins. No hesitation or hesitation, welcome every beautiful day.</span>
-
-          </div>
-          <div class="introduce_item">
-
-              <span class="introduce_item_titles">People who are studying are always in a hurry, and time always seems to be insufficient. Before you know it, the tree is already full of flowers</span>
-              <img class="introduce_item_img" src="lakeandflower.jpg" alt="">
-          </div>
-          <div class="introduce_item">
-              <img class="introduce_item_img" src="tingzilandscap.png" alt="">
-              <span class="introduce_item_title">Often recall, many years ago, rain or shine, the boy who had to pass by that pavilion every day.</span>
-          </div>
-          <div class="introduce_item">
-              <span class="introduce_item_titles">Seeing them grow up happily, everything seems to be beautiful.</span>
-              <img class="introduce_item_img" src="girl.jpg" alt="">
-          </div>
-      </div>
-      <audio autoplay="autoplay" id="audio" loop="loop">
-              <source src="shuijing.mp3" type="audio/MP3">
-             
-      </audio>
-      <img class="music_img" src="changp.png" alt="">
-  </div>
-
+    <h1>Menu Service Client</h1>
+    <div id="result"></div>
 </body>
-<script>
-  let mucics = document.getElementById('audio')
-  document.body.addEventListener('mousemove', function() {
-      setTimeout(() => {
-          mucics.play();
-      }, 2000);
-  }, false);
-</script>
 
 </html>
-
 
 
