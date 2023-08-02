@@ -1,55 +1,60 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>Menu Service Client</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>SOAP Client</title>
     <script>
-        $(document).ready(function () {
-            var url = "http://localhost:8080/WebMenuServiceProject/ws/WebMenu"; // 修改为你的SOAP服务地址
+        var url = 'http://localhost:8080/WebMenuServiceProject/ws/WebMenu';
+
+        function displayMenuInfo() {
             var soapRequest =
-                `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:web="http://webMenuService/">
+                `<?xml version="1.0" encoding="utf-8"?>
+                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:web="http://yournamespace/">
                     <soapenv:Header/>
                     <soapenv:Body>
                         <web:displayMenuInfo/>
                     </soapenv:Body>
-                </soapenv:Envelope>`;
+                 </soapenv:Envelope>`;
 
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "xml",
-                data: soapRequest,
+            callSoapService(soapRequest);
+        }
+
+        function searchMenuInfo() {
+            var menu_no = document.getElementById("menu_no").value;
+            var soapRequest =
+                `<?xml version="1.0" encoding="utf-8"?>
+                 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+                    xmlns:web="http://yournamespace/">
+                    <soapenv:Header/>
+                    <soapenv:Body>
+                        <web:searchMenuInfo>
+                            <menu_no>${menu_no}</menu_no>
+                        </web:searchMenuInfo>
+                    </soapenv:Body>
+                 </soapenv:Envelope>`;
+
+            callSoapService(soapRequest);
+        }
+
+        function callSoapService(soapRequest) {
+            fetch(url, {
+                method: 'POST',
+                body: soapRequest,
                 headers: {
-                    "SOAPAction": "",
-                    "Content-Type": "text/xml;charset=UTF-8"
+                    'Content-Type': 'text/xml; charset=utf-8',
                 },
-                success: function (data, status, req) {
-                    // 从SOAP响应中获取你需要的数据，并将其添加到HTML中
-                    // 这个例子中只是简单地将整个SOAP响应转化为字符串并显示出来
-
-                    var xmlDoc = req.responseXML;
-                    var menuItems = xmlDoc.getElementsByTagName("return");
-                    var result = "";
-                    for (var i = 0; i < menuItems.length; i++) {
-                        result += menuItems[i].textContent + "\n";
-                    }
-                    $("#result").text(result);
-                },
-                error: function (req, status, error) {
-                    // 错误处理
-                    alert("An error occurred: " + error);
-                }
-            });
-        });
+            })
+            .then(response => response.text())
+            .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+            .then(xml => document.getElementById('response').textContent = xml.getElementsByTagName('return')[0].textContent)
+            .catch(error => console.log('Error:', error));
+        }
     </script>
 </head>
-
 <body>
-    <h1>Menu Service Client</h1>
-    <div id="result"></div>
+    <input id="menu_no" type="text" placeholder="Menu Number">
+    <button onclick="searchMenuInfo()">Search Menu</button>
+    <button onclick="displayMenuInfo()">Display Menu</button>
+    <p id="response"></p>
 </body>
-
 </html>
-
-
